@@ -1,15 +1,13 @@
-import { dateTime, formatAMPM, localTime } from "../assets/helper";
-
-function TimeAndLocation() {
+function TimeAndLocation({ weatherData }) {
   return (
     <>
-      <div className="flex items-center justify-center text-xl font-extralight my-6">
-        <p>{dateTime(new Date())}</p>
-        <p>&#65372;</p>
-        <p>Local Time: {localTime()}</p>
+      <div className="flex items-center justify-center my-6 text-xl font-extralight">
+        <p>{weatherData.formatedLocalTime}</p>
       </div>
-      <div className="flex justify-center items-center my-4">
-        <p className="text-xl font-medium">Berlin, DE XXXX</p>
+      <div className="flex items-center justify-center my-4">
+        <p className="text-xl font-medium">
+          {weatherData.name}, {weatherData.country}
+        </p>
       </div>
     </>
   );
