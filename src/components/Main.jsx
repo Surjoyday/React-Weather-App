@@ -14,7 +14,20 @@ function Main() {
   const [units, setUnits] = useState({ units: "metric" });
 
   function handleSearch(input) {
-    setSerachedQuerry({ q: input });
+    setSerachedQuerry({ q: input.toLowerCase() });
+  }
+
+  function handleUnits(value) {
+    setUnits({ units: value });
+  }
+
+  function handleGeoLoaction() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((success) => {
+        const { latitude, longitude } = success.coords;
+        setSerachedQuerry({ lat: latitude, lon: longitude });
+      });
+    }
   }
 
   useEffect(
@@ -30,7 +43,7 @@ function Main() {
           const dataOfForecast = await getForecastData("forecast", {
             lat: formatWeatherData(dataOfWeather).lat,
             lon: formatWeatherData(dataOfWeather).lon,
-            units: "metric",
+            ...units,
           });
 
           setForecastData(
@@ -49,14 +62,18 @@ function Main() {
     [searchedQuerry, units]
   );
   return (
-    <div className="w-8/12 h-3/4">
+    <div className="w-8/12 h-3/4 max-sm:w-full max-sm:p-2">
       <NavButtons onSearch={handleSearch} />
       <div className="py-6 mt-2 bg-black bg-opacity-40 rounded-md text-white">
-        <SearchFields />
+        <SearchFields
+          onSearch={handleSearch}
+          onHandleUnits={handleUnits}
+          onLocationClick={handleGeoLoaction}
+        />
         {weatherData && (
           <>
             <TimeAndLocation weatherData={weatherData} />
-            <TempAndDetails weatherData={weatherData} />
+            <TempAndDetails weatherData={weatherData} units={units} />
           </>
         )}
         {forecastData && (

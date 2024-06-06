@@ -1,25 +1,5 @@
 import { DateTime } from "luxon";
 
-const dateTime = function (date) {
-  return new Intl.DateTimeFormat("en", {
-    weekday: "long",
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  }).format(date);
-};
-
-const formatAMPM = function (time) {
-  return time >= 12 ? "PM" : "AM";
-};
-
-const localTime = function (date = new Date()) {
-  return new Intl.DateTimeFormat("en", {
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(new Date(date));
-};
-
 const formatToLocalTime = (
   secs,
   offset,
@@ -80,7 +60,7 @@ const formatForecastData = (secs, offset, data) => {
   const dailyData = data
     .filter((f) => f.dt_txt?.slice(-8) === "00:00:00")
     .map((f) => ({
-      temp: f.main.temp,
+      temp: f.main.temp?.toFixed(0),
       title: formatToLocalTime(f.dt, offset, "ccc"),
       icon: iconURL(f?.weather?.at(0).icon),
       date: f.dt_txt,
@@ -89,10 +69,4 @@ const formatForecastData = (secs, offset, data) => {
   return { hourlyData, dailyData };
 };
 
-export {
-  dateTime,
-  formatAMPM,
-  localTime,
-  formatWeatherData,
-  formatForecastData,
-};
+export { formatWeatherData, formatForecastData };

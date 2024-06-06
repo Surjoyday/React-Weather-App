@@ -1,12 +1,11 @@
 import { GiSunrise, GiSunset } from "react-icons/gi";
-import { localTime } from "../assets/helper";
 import DeviceThermostatTwoToneIcon from "@mui/icons-material/DeviceThermostatTwoTone";
 import WaterDropTwoToneIcon from "@mui/icons-material/WaterDropTwoTone";
 import AirTwoToneIcon from "@mui/icons-material/AirTwoTone";
 import KeyboardArrowUpTwoToneIcon from "@mui/icons-material/KeyboardArrowUpTwoTone";
 import KeyboardArrowDownTwoToneIcon from "@mui/icons-material/KeyboardArrowDownTwoTone";
 
-function TempAndDetails({ weatherData }) {
+function TempAndDetails({ weatherData, units }) {
   const verticalDetails = [
     {
       id: 1,
@@ -59,7 +58,7 @@ function TempAndDetails({ weatherData }) {
     <>
       <p className="flex items-center justify-center">{weatherData.main}</p>
 
-      <div className="flex items-center justify-around">
+      <div className="flex items-center justify-around ">
         <div>
           <img
             src={weatherData.icon}
@@ -68,9 +67,13 @@ function TempAndDetails({ weatherData }) {
           />
         </div>
 
-        <p className="text-2xl ml-12">{weatherData.temp}℃</p>
+        <p className="text-2xl ml-12 max-sm:ml-0">
+          {weatherData.temp}
 
-        <div className="flex flex-col gap-1">
+          {units.units === "metric" ? "℃" : "℉"}
+        </p>
+
+        <div className="flex flex-col gap-1 max-sm:my-3">
           {verticalDetails.map((detailAbout) => (
             <div key={detailAbout.id} className="flex items-center">
               <detailAbout.Icon fontSize="small" className="mr-1" />
@@ -83,13 +86,17 @@ function TempAndDetails({ weatherData }) {
         </div>
       </div>
 
-      <div className="flex items-center justify-center space-x-9 my-7">
+      <div className="flex items-center justify-around my-7">
         {horizontalDetails.map((detailAbout) => (
-          <div key={detailAbout.id} className="flex">
+          <div
+            key={detailAbout.id}
+            className="flex items-center justify-start max-sm:flex-none"
+          >
             <detailAbout.Icon size={20} />
-            <p className="pl-2 text-sm font-light">
-              {detailAbout.title} : <span>{detailAbout.value}</span>
-            </p>
+            <div className="text-center">
+              <p className="pl-2 text-sm font-light">{detailAbout.title}</p>
+              <p className="pl-2 text-sm font-light">{detailAbout.value}</p>
+            </div>
           </div>
         ))}
       </div>

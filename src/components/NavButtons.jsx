@@ -7,10 +7,10 @@ function NavButtons({ onSearch }) {
     { id: 5, cityName: "Dublin" },
   ];
   return (
-    <div className="flex items-center justify-around">
+    <div className="flex items-center justify-around max-sm:justify-center max-sm:gap-3">
       {cities.map((city) => (
         <button
-          className="text-lg font-semibold hover:bg-gray-700/50 p-1.5 rounded-md transition ease-in cursor-pointer"
+          className="text-lg max-sm:text-sm font-semibold hover:bg-gray-700/50 p-1.5 rounded-md transition ease-in cursor-pointer"
           key={city.id}
           onClick={() => onSearch(city.cityName)}
         >

@@ -1,5 +1,4 @@
 function Forecast({ title, forecastData }) {
-  console.log(forecastData);
   return (
     <>
       <div className="flex flex-col items-start justify-start my-6 px-14">
