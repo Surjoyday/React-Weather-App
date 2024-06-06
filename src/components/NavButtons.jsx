@@ -1,4 +1,4 @@
-function NavButtons() {
+function NavButtons({ onSearch }) {
   const cities = [
     { id: 1, cityName: "Munich" },
     { id: 3, cityName: "Tokyo" },
@@ -12,6 +12,7 @@ function NavButtons() {
         <button
           className="text-lg font-semibold hover:bg-gray-700/50 p-1.5 rounded-md transition ease-in cursor-pointer"
           key={city.id}
+          onClick={() => onSearch(city.cityName)}
         >
           {city.cityName}
         </button>

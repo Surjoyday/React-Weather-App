@@ -52,9 +52,9 @@ const formatWeatherData = (data) => {
     lon,
     feels_like,
     humidity,
-    temp,
-    temp_min,
-    temp_max,
+    temp: temp.toFixed(0),
+    temp_min: temp_min.toFixed(0),
+    temp_max: temp_max.toFixed(0),
     name,
     country,
     formatedLocalTime,
@@ -71,7 +71,7 @@ const formatForecastData = (secs, offset, data) => {
     .filter((f) => f.dt > secs)
     .slice(0, 5)
     .map((f) => ({
-      temp: f.main.temp,
+      temp: f.main.temp?.toFixed(0),
       title: formatToLocalTime(f.dt, offset, "hh:mm a"),
       icon: iconURL(f?.weather?.at(0).icon),
       date: f.dt_txt,
