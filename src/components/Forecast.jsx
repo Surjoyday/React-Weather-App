@@ -1,3 +1,11 @@
+import React from "react";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+
 function Forecast({ title, forecastData }) {
   return (
     <>
@@ -6,22 +14,64 @@ function Forecast({ title, forecastData }) {
         <hr className="w-full" />
       </div>
 
-      <div className="flex items-center justify-evenly">
-        {forecastData?.map((data, index) => (
-          <div
-            key={index}
-            className="flex flex-col items-center justify-center"
-          >
-            <p className="text-sm font-light">{data.title}</p>
-            <img
-              src={data.icon}
-              alt="open-weather-icon"
-              className="w-12 my-1"
-            />
-            <p className="font-medium">{data.temp}°</p>
-          </div>
-        ))}
-      </div>
+      <TableContainer
+        component={Paper}
+        className="my-7"
+        sx={{
+          backgroundColor: "transparent",
+          boxShadow: "none",
+        }}
+      >
+        <Table
+          aria-label="forecast details"
+          sx={{
+            "& .MuiTableCell-root": {
+              border: "none",
+              textAlign: "center",
+              verticalAlign: "middle",
+            },
+          }}
+        >
+          <TableBody>
+            {forecastData?.map((data, index) => (
+              <TableRow key={index}>
+                <TableCell
+                  sx={{
+                    minWidth: "90px",
+                    fontSize: "16px",
+                    fontWeight: "600",
+                  }}
+                >
+                  {data.title}
+                </TableCell>
+                <TableCell
+                  align="center"
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <img
+                    src={data.icon}
+                    alt="open-weather-icon"
+                    className="w-14"
+                  />
+                </TableCell>
+                <TableCell
+                  sx={{
+                    minWidth: "90px",
+                    fontSize: "16px",
+                    fontWeight: "600",
+                  }}
+                >
+                  {data.temp}°
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </>
   );
 }

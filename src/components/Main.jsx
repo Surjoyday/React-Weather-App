@@ -10,9 +10,10 @@ import { useEffect, useState } from "react";
 function Main() {
   const [weatherData, setWeatherData] = useState({});
   const [forecastData, setForecastData] = useState({});
-  const [searchedQuerry, setSerachedQuerry] = useState({ q: "guwahati" });
+  const [searchedQuerry, setSerachedQuerry] = useState({});
   const [units, setUnits] = useState({ units: "metric" });
 
+  console.log(weatherData);
   function handleSearch(input) {
     setSerachedQuerry({ q: input.toLowerCase() });
   }
@@ -28,6 +29,19 @@ function Main() {
         setSerachedQuerry({ lat: latitude, lon: longitude });
       });
     }
+  }
+
+  function handleBgColor() {
+    if (Object.keys(weatherData).length === 0) {
+      return "bg-black";
+    }
+
+    const threshold = units.units === "metric" ? 20 : 60;
+    console.log(weatherData.temp);
+    console.log(+weatherData.temp <= threshold);
+    if (weatherData.temp <= threshold) return "bg-sky-700";
+
+    return "bg-amber-600";
   }
 
   useEffect(
@@ -62,21 +76,28 @@ function Main() {
     [searchedQuerry, units]
   );
   return (
-    <div className="w-8/12 h-3/4 max-sm:w-full max-sm:p-2">
+    <div
+      className={`w-8/12 ${
+        Object.keys(weatherData).length === 0 ? "h-screen" : ""
+      } max-sm:w-full max-sm:p-2`}
+    >
       <NavButtons onSearch={handleSearch} />
-      <div className="py-6 mt-2 bg-black bg-opacity-40 rounded-md text-white">
+
+      <div
+        className={`py-6 mt-2 ${handleBgColor()}  bg-opacity-40 rounded-md text-white`}
+      >
         <SearchFields
           onSearch={handleSearch}
           onHandleUnits={handleUnits}
           onLocationClick={handleGeoLoaction}
         />
-        {weatherData && (
+        {Object.keys(weatherData).length !== 0 && (
           <>
             <TimeAndLocation weatherData={weatherData} />
             <TempAndDetails weatherData={weatherData} units={units} />
           </>
         )}
-        {forecastData && (
+        {Object.keys(forecastData).length !== 0 && (
           <>
             <Forecast
               title={"3 hour step forecast"}
