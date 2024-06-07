@@ -1,7 +1,7 @@
 import { TextField } from "@mui/material";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import MyLocationRoundedIcon from "@mui/icons-material/MyLocationRounded";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 function SearchFields({ onSearch, onHandleUnits, onLocationClick }) {
   const [inputValue, setInputValue] = useState("");
